@@ -1,4 +1,4 @@
-set (CMAKE_CXX_FLAGS "-std=c++1z ${CMAKE_CXX_FLAGS}")
+set(CMAKE_CXX_FLAGS "-Wall -std=c++1z ${CMAKE_CXX_FLAGS}")
 include_directories(
     ../placeholder
     ${gtest_SOURCE_DIR}/include

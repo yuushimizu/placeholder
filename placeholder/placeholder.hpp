@@ -11,22 +11,22 @@ namespace placeholder {
     public:
       constexpr Placeable(F f) noexcept : f_(std::move(f)) {
       }
-            
+      
       template <typename ... Args>
       constexpr decltype(auto) operator()(Args && ... args) const& {
         return f_(std::forward<Args>(args) ...);
       }
-            
+      
       template <typename ... Args>
       constexpr decltype(auto) operator()(Args && ... args) & {
         return f_(std::forward<Args>(args) ...);
       }
-            
+      
       template <typename ... Args>
       constexpr decltype(auto) operator()(Args && ... args) && {
         return f_(std::forward<Args>(args) ...);
       }
-            
+      
     private:
       F f_;
     };
@@ -70,8 +70,8 @@ namespace placeholder {
         
 #undef PLACEHOLDER_DEFINE_UNARY_OPERATOR
         
-      template <typename F, unary_operator_enable_if_t<F> = nullptr>
-      constexpr auto operator ++(F &&f, int) noexcept {
+    template <typename F, unary_operator_enable_if_t<F> = nullptr>
+    constexpr auto operator ++(F &&f, int) noexcept {
       return placeable([f = std::forward<F>(f)](auto &&arg) constexpr -> decltype(auto) {
           return f(std::forward<decltype(arg)>(arg))++;
         });
@@ -89,21 +89,21 @@ namespace placeholder {
     public:
       constexpr BinaryOperator(F f) noexcept : f_(std::move(f)) {
       }
-            
+      
       template <typename LHS, typename RHS, std::enable_if_t<is_placeable_v<LHS>, std::nullptr_t> = nullptr>
       constexpr auto operator()(LHS &&lhs, RHS &&rhs) noexcept {
         return placeable([&f = f_, lhs = std::forward<LHS>(lhs), rhs = std::forward<RHS>(rhs)](auto &&arg) constexpr -> decltype(auto) {
             return f(lhs(std::forward<decltype(arg)>(arg)), rhs);
           });
       }
-            
+      
       template <typename LHS, typename RHS, std::enable_if_t<is_placeable_v<RHS>, std::nullptr_t> = nullptr>
       constexpr auto operator()(LHS &&lhs, RHS &&rhs) noexcept {
         return placeable([&f = f_, lhs = std::forward<LHS>(lhs), rhs = std::forward<RHS>(rhs)](auto &&arg) constexpr -> decltype(auto) {
             return f(lhs, rhs(std::forward<decltype(arg)>(arg)));
           });
       }
-            
+      
     private:
       const F f_;
     };
@@ -156,7 +156,7 @@ namespace placeholder {
         
 #undef PLACEHOLDER_DEFINE_BINARY_OPERATOR
         
-      }
+  }
     
   constexpr const auto _ = detail::placeable([](auto &&x) -> decltype(auto) {return std::forward<decltype(x)>(x);});
 }

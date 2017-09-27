@@ -6,11 +6,13 @@ placeholder is an C++17(or C++1z) library to create functions by short syntax.
 Include `placeholder/placeholder.hpp`
 
 ```c++
-#include <placeholder.hpp>
+#include <placeholder/placeholder.hpp>
 ```
 
 ## example ##
 ```c++
+using placeholder::_;
+
 auto add5 = _ + 5;
 add5(10); // => 15
 

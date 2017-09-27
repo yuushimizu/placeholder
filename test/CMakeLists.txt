@@ -12,3 +12,7 @@ target_link_libraries(
     gtest
     gtest_main
     )
+add_test(
+    NAME placeholder
+    COMMAND $<TARGET_FILE:placeholder_test>
+    )
